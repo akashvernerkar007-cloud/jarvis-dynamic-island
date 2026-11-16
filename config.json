@@ -1,0 +1,22 @@
+{
+  "ai": {
+    "provider": "ollama",
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "qwen3.5:2b",
+    "temperature": 0.2,
+    "max_tokens": 45
+  },
+  "voice": {
+    "whisper_endpoint": "http://127.0.0.1:8765",
+    "whisper_model": "base.en",
+    "tts_rate": 1,
+    "record_timeout_seconds": 6.5
+  },
+  "island": {
+    "width": 290,
+    "height": 175,
+    "extended_height": 180,
+    "auto_hide_seconds": 3.4,
+    "clipboard_history_max": 50
+  }
+}
