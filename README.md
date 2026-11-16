@@ -1,6 +1,7 @@
 <div align="center">
 
-# 🏝️ JARVIS Dynamic Island for Windows
+# 🏝️ JARVIS in<img width="1536" height="1024" alt="Jarvis Dynamic Island Emotion Gallery" src="https://github.com/user-attachments/assets/4fe6ab0f-549f-4c02-b4a1-05e5719ba787" />
+ Dynamic Island for Windows
 
 **An intelligent, futuristic Dynamic Island assistant for Windows featuring expressive OLED eye animations, sub-second local neural AI, high-accuracy Faster-Whisper voice recognition, and an integrated Clipboard History manager.**
 
