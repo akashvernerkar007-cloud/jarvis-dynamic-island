@@ -1,7 +1,5 @@
 <div align="center">
-
-# 🏝️ JARVIS in<img width="1536" height="1024" alt="Jarvis Dynamic Island Emotion Gallery" src="https://github.com/user-attachments/assets/4fe6ab0f-549f-4c02-b4a1-05e5719ba787" />
- Dynamic Island for Windows
+s
 
 **An intelligent, futuristic Dynamic Island assistant for Windows featuring expressive OLED eye animations, sub-second local neural AI, high-accuracy Faster-Whisper voice recognition, and an integrated Clipboard History manager.**
 
@@ -12,6 +10,15 @@
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 </div>
+
+
+
+<img width="1536" height="1024" alt="Jarvis Dynamic Island Emotion Gallery" src="https://github.com/user-attachments/assets/ee68ffbb-0e2b-4eb4-80f2-7a0dcc2bf99d" />
+
+
+
+
+
 
 ---
 
