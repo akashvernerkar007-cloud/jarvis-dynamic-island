@@ -35,11 +35,11 @@ if ($isLocal) {
     $gitCmd = Get-Command "git.exe" -ErrorAction SilentlyContinue
     if ($gitCmd) {
         Write-Host "[*] Cloning repository via Git..." -ForegroundColor Gray
-        git clone --depth 1 "https://github.com/USER_OR_ORG/jarvis-dynamic-island.git" $installDir 2>$null
+        git clone --depth 1 "https://github.com/akashvernerkar007-cloud/jarvis-dynamic-island.git" $installDir 2>$null
     } else {
         Write-Host "[*] Downloading latest release archive..." -ForegroundColor Gray
         $zipPath = "$env:TEMP\jarvis-dynamic-island.zip"
-        $repoZipUrl = "https://github.com/USER_OR_ORG/jarvis-dynamic-island/archive/refs/heads/main.zip"
+        $repoZipUrl = "https://github.com/akashvernerkar007-cloud/jarvis-dynamic-island/archive/refs/heads/main.zip"
         try {
             Invoke-RestMethod -Uri $repoZipUrl -OutFile $zipPath
             Expand-Archive -Path $zipPath -DestinationPath "$env:TEMP\jarvis_unzip" -Force

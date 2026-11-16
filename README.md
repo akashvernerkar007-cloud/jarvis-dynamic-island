@@ -19,10 +19,8 @@
 Open **PowerShell** (Win + X → Terminal / PowerShell) and paste this single command:
 
 ```powershell
-irm https://raw.githubusercontent.com/<YOUR_GITHUB_USERNAME>/jarvis-dynamic-island/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/akashvernerkar007-cloud/jarvis-dynamic-island/main/install.ps1 | iex
 ```
-
-> 💡 *Replace `<YOUR_GITHUB_USERNAME>` with your GitHub username or organization.*
 
 This one-liner will automatically:
 1. Clone the repository into your local application directory.
@@ -39,7 +37,7 @@ If you prefer to clone and install manually:
 
 ```powershell
 # 1. Clone the repository
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/jarvis-dynamic-island.git
+git clone https://github.com/akashvernerkar007-cloud/jarvis-dynamic-island.git
 cd jarvis-dynamic-island
 
 # 2. Run the automated installer
