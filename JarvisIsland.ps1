@@ -209,7 +209,7 @@ $null = Ensure-WhisperRunning
 
 $screenW = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width
 $islandW = 340
-$islandH = 205
+$islandH = 225
 $posX = [int](($screenW - $islandW) / 2)
 
 [xml]$xaml = @"
@@ -223,7 +223,7 @@ $posX = [int](($screenW - $islandW) / 2)
     <Grid>
         <!-- The Dynamic Island Pill -->
         <Border Name="IslandBorder"
-                Width="330" Height="70"
+                Width="332" Height="70"
                 VerticalAlignment="Top" HorizontalAlignment="Center"
                 Background="#040608"
                 CornerRadius="0,0,26,26"
@@ -377,34 +377,47 @@ $posX = [int](($screenW - $islandW) / 2)
                             Opacity="0"
                             Visibility="Collapsed">
 
-                    <!-- VAYLI NOTCH APPLET SELECTOR ROW -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,6">
-                        <Border Name="TabAi" Background="#2600f0ff" BorderBrush="#00f0ff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="AI Assistant (Voice &amp; Chat)">
-                            <TextBlock Text="💬 AI" FontSize="9" FontWeight="Bold" Foreground="#00f0ff"/>
+                    <!-- VAYLI NOTCH APPLET SELECTOR (2 ROWS OF 6 COMPACT PILLS) -->
+                    <!-- Row 1 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,2">
+                        <Border Name="TabAi" Width="51" Height="20" Background="#2600f0ff" BorderBrush="#00f0ff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="AI Assistant">
+                            <TextBlock Text="💬 AI" FontSize="8.5" FontWeight="Bold" Foreground="#00f0ff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="TabMusic" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Music &amp; Media Controls">
-                            <TextBlock Text="🎵 Music" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        <Border Name="TabMusic" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Music &amp; Media">
+                            <TextBlock Text="🎵 Music" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="TabTimer" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Focus &amp; Pomodoro Timer">
-                            <TextBlock Text="⏱️ Focus" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        <Border Name="TabTimer" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Focus Pomodoro">
+                            <TextBlock Text="⏱️ Focus" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="TabShelf" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Vayli Drop / File Shelf">
-                            <TextBlock Text="📁 Shelf" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        <Border Name="TabShelf" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Vayli Drop Shelf">
+                            <TextBlock Text="📁 Shelf" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="TabSys" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="System Hardware Monitor">
-                            <TextBlock Text="💻 Sys" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        <Border Name="TabSys" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Hardware HUD">
+                            <TextBlock Text="💻 Sys" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="TabNotes" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Quick Scratchpad Notes">
-                            <TextBlock Text="📝 Note" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        <Border Name="TabWeather" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Weather &amp; Sky">
+                            <TextBlock Text="🌤️ Sky" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="ClipBtn" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Clipboard History Modal">
-                            <TextBlock Text="📋" FontSize="9" Foreground="#ffffff"/>
+                    </StackPanel>
+                    <!-- Row 2 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                        <Border Name="TabWorld" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="World Clock">
+                            <TextBlock Text="🌐 World" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="ShotBtn" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Screenshot Snipping">
-                            <TextBlock Text="📸" FontSize="9" Foreground="#ffffff"/>
+                        <Border Name="TabBanner" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Notch Banner Status">
+                            <TextBlock Text="🏷️ Status" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-                        <Border Name="ColorBtn" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Change Theme Neon Glow">
-                            <TextBlock Text="🎨" FontSize="9" Foreground="#ffffff"/>
+                        <Border Name="TabNotes" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Quick Notes">
+                            <TextBlock Text="📝 Note" FontSize="8.5" FontWeight="SemiBold" Foreground="#88a0b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Name="ClipBtn" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Clipboard Modal">
+                            <TextBlock Text="📋 Clip" FontSize="8.5" Foreground="#ffffff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Name="ShotBtn" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Screenshot">
+                            <TextBlock Text="📸 Shot" FontSize="8.5" Foreground="#ffffff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Name="ColorBtn" Width="51" Height="20" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="5" Margin="1,0" Cursor="Hand" ToolTip="Neon Glow Color">
+                            <TextBlock Text="🎨 Glow" FontSize="8.5" Foreground="#ffffff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </StackPanel>
 
@@ -506,7 +519,79 @@ $posX = [int](($screenW - $islandW) / 2)
                             <TextBlock Text="Live Hardware Status • Auto-refreshes" FontSize="8.5" Foreground="#607b99" HorizontalAlignment="Center"/>
                         </StackPanel>
 
-                        <!-- Panel 6: Quick Scratchpad Notes -->
+                        <!-- Panel 6: Weather & Sky HUD (Vayli Tool 4) -->
+                        <StackPanel Name="PanelWeather" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
+                                <TextBlock Name="WeatherCityText" Text="🌤️ Checking weather..." FontSize="11.5" FontWeight="Bold" Foreground="#38bdf8" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <Border Name="WeatherUnitBtn" Height="22" CornerRadius="5" Background="#182535" BorderBrush="#2e4258" BorderThickness="1" Padding="6,2" Cursor="Hand" Margin="2,0" ToolTip="Toggle °C / °F">
+                                    <TextBlock Text="°C/°F" FontSize="8.5" Foreground="#a0c0e0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="WeatherRefreshBtn" Width="24" Height="22" CornerRadius="5" Background="#182535" BorderBrush="#2e4258" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Refresh Weather">
+                                    <TextBlock Text="🔄" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Name="WeatherDescText" Text="Live sky condition &amp; temperature without browser tabs" FontSize="8.5" Foreground="#607b99" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Panel 7: World Clock (Vayli Tool 11) -->
+                        <StackPanel Name="PanelWorld" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
+                                <Border Background="#101724" BorderBrush="#22344c" BorderThickness="1" CornerRadius="6" Padding="5,3" Margin="1.5,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🇬🇧 " FontSize="8.5"/>
+                                        <TextBlock Name="WorldLonText" Text="--:--" FontSize="9" FontWeight="Bold" Foreground="#818cf8"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#101724" BorderBrush="#22344c" BorderThickness="1" CornerRadius="6" Padding="5,3" Margin="1.5,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🇺🇸 " FontSize="8.5"/>
+                                        <TextBlock Name="WorldNYText" Text="--:--" FontSize="9" FontWeight="Bold" Foreground="#818cf8"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#101724" BorderBrush="#22344c" BorderThickness="1" CornerRadius="6" Padding="5,3" Margin="1.5,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🇯🇵 " FontSize="8.5"/>
+                                        <TextBlock Name="WorldTokText" Text="--:--" FontSize="9" FontWeight="Bold" Foreground="#818cf8"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#101724" BorderBrush="#22344c" BorderThickness="1" CornerRadius="6" Padding="5,3" Margin="1.5,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🇦🇪 " FontSize="8.5"/>
+                                        <TextBlock Name="WorldDubText" Text="--:--" FontSize="9" FontWeight="Bold" Foreground="#818cf8"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Text="World Clocks • London • NYC • Tokyo • Dubai" FontSize="8.5" Foreground="#607b99" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Panel 8: Notch Status Banner (Vayli Tool 15) -->
+                        <StackPanel Name="PanelBanner" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
+                                <Border Name="ChipCall" Height="20" CornerRadius="5" Background="#26ff6b8b" BorderBrush="#ff6b8b" BorderThickness="1" Padding="5,2" Cursor="Hand" Margin="1,0" ToolTip="On a call">
+                                    <TextBlock Text="🔴 Call" FontSize="8" FontWeight="SemiBold" Foreground="#ff6b8b" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="ChipBreak" Height="20" CornerRadius="5" Background="#26ffd000" BorderBrush="#ffd000" BorderThickness="1" Padding="5,2" Cursor="Hand" Margin="1,0" ToolTip="Back in 10">
+                                    <TextBlock Text="☕ Break" FontSize="8" FontWeight="SemiBold" Foreground="#ffd000" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="ChipDeep" Height="20" CornerRadius="5" Background="#2600f0a8" BorderBrush="#00f0a8" BorderThickness="1" Padding="5,2" Cursor="Hand" Margin="1,0" ToolTip="Deep Work">
+                                    <TextBlock Text="🎯 Deep" FontSize="8" FontWeight="SemiBold" Foreground="#00f0a8" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="ChipDND" Height="20" CornerRadius="5" Background="#26a855f7" BorderBrush="#a855f7" BorderThickness="1" Padding="5,2" Cursor="Hand" Margin="1,0" ToolTip="Do Not Disturb">
+                                    <TextBlock Text="🔕 DND" FontSize="8" FontWeight="SemiBold" Foreground="#a855f7" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="BannerClearBtn" Height="20" CornerRadius="5" Background="#182230" BorderBrush="#2e4258" BorderThickness="1" Padding="5,2" Cursor="Hand" Margin="1,0" ToolTip="Clear Banner">
+                                    <TextBlock Text="✕" FontSize="8" Foreground="#a0c0e0" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBox Name="BannerInput" Width="236" Height="22" Background="#121922" BorderBrush="#2a3d52" BorderThickness="1" Foreground="#ffffff" FontSize="9" Padding="4,2" VerticalContentAlignment="Center" ToolTip="Custom status note for notch"/>
+                                <Border Name="BannerSetBtn" Width="36" Height="22" CornerRadius="4" Background="#00f0ff" Cursor="Hand" Margin="3,0,0,0">
+                                    <TextBlock Text="Set" FontSize="9" FontWeight="Bold" Foreground="#000000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Panel 9: Quick Scratchpad Notes -->
                         <Grid Name="PanelNotes" Visibility="Collapsed">
                             <TextBox Name="NotesBox" Height="44" Width="306"
                                      Background="#101620" BorderBrush="#283a50" BorderThickness="1"
@@ -542,12 +627,15 @@ $colorBtn      = $window.FindName("ColorBtn")
 $chatInput     = $window.FindName("ChatInput")
 $sendBtn       = $window.FindName("SendBtn")
 
-# Vayli Element References
+# Vayli 18-Tool Element References
 $tabAi             = $window.FindName("TabAi")
 $tabMusic          = $window.FindName("TabMusic")
 $tabTimer          = $window.FindName("TabTimer")
 $tabShelf          = $window.FindName("TabShelf")
 $tabSys            = $window.FindName("TabSys")
+$tabWeather        = $window.FindName("TabWeather")
+$tabWorld          = $window.FindName("TabWorld")
+$tabBanner         = $window.FindName("TabBanner")
 $tabNotes          = $window.FindName("TabNotes")
 
 $panelAi           = $window.FindName("PanelAi")
@@ -555,6 +643,9 @@ $panelMusic        = $window.FindName("PanelMusic")
 $panelTimer        = $window.FindName("PanelTimer")
 $panelShelf        = $window.FindName("PanelShelf")
 $panelSys          = $window.FindName("PanelSys")
+$panelWeather      = $window.FindName("PanelWeather")
+$panelWorld        = $window.FindName("PanelWorld")
+$panelBanner       = $window.FindName("PanelBanner")
 $panelNotes        = $window.FindName("PanelNotes")
 
 $musicPrevBtn      = $window.FindName("MusicPrevBtn")
@@ -579,6 +670,24 @@ $sysCpuText        = $window.FindName("SysCpuText")
 $sysRamText        = $window.FindName("SysRamText")
 $sysBattText       = $window.FindName("SysBattText")
 $sysRefreshBtn     = $window.FindName("SysRefreshBtn")
+
+$weatherCityText   = $window.FindName("WeatherCityText")
+$weatherDescText   = $window.FindName("WeatherDescText")
+$weatherUnitBtn    = $window.FindName("WeatherUnitBtn")
+$weatherRefreshBtn = $window.FindName("WeatherRefreshBtn")
+
+$worldLonText      = $window.FindName("WorldLonText")
+$worldNYText       = $window.FindName("WorldNYText")
+$worldTokText      = $window.FindName("WorldTokText")
+$worldDubText      = $window.FindName("WorldDubText")
+
+$chipCall          = $window.FindName("ChipCall")
+$chipBreak         = $window.FindName("ChipBreak")
+$chipDeep          = $window.FindName("ChipDeep")
+$chipDND           = $window.FindName("ChipDND")
+$bannerInput       = $window.FindName("BannerInput")
+$bannerSetBtn      = $window.FindName("BannerSetBtn")
+$bannerClearBtn    = $window.FindName("BannerClearBtn")
 
 $notesBox          = $window.FindName("NotesBox")
 $notesStatus       = $window.FindName("NotesStatus")
@@ -695,7 +804,7 @@ function Animate-Island([double]$targetY) {
 function Toggle-Extend() {
     $script:isExtended = -not $script:isExtended
 
-    $targetH = if ($script:isExtended) { 178.0 } else { 70.0 }
+    $targetH = if ($script:isExtended) { 196.0 } else { 70.0 }
     $animH = New-Object System.Windows.Media.Animation.DoubleAnimation
     $animH.To = $targetH
     $animH.Duration = [TimeSpan]::FromMilliseconds(240)
@@ -1539,6 +1648,37 @@ function Execute-VoiceCommand([string]$cmd) {
         return
     }
 
+    # Vayli 6: Weather & Sky HUD
+    if ($lower -match "^weather|how.*weather|what.*temperature|check sky") {
+        Update-Weather
+        if (-not $script:isExtended) { Toggle-Extend }
+        Switch-Tab "Weather"
+        Speak-Jarvis "Checking the sky. Local weather updated." "happy"
+        return
+    }
+
+    # Vayli 7: World Clock
+    if ($lower -match "world clock|what time in|time in london|time in new york|time in tokyo") {
+        Update-WorldClocks
+        if (-not $script:isExtended) { Toggle-Extend }
+        Switch-Tab "World"
+        Speak-Jarvis "Here are your world time zones." "happy"
+        return
+    }
+
+    # Vayli 8: Notch Status Banner / Marquee
+    if ($lower -match "^(?:please\s+)?set (?:status|banner) (.+)$") {
+        $bannerMsg = $matches[1]
+        Set-NotchBanner $bannerMsg "#00f0ff"
+        Speak-Jarvis "Banner set to $bannerMsg." "wink"
+        return
+    }
+    if ($lower -match "^(?:please\s+)?clear (?:status|banner)$") {
+        Clear-NotchBanner
+        Speak-Jarvis "Banner cleared." "happy"
+        return
+    }
+
     # 3. App Opener
     if ($lower -match '^(?:please\s+)?(?:open|launch|start)\s+(.+)$') {
         $app = $matches[1].Trim()
@@ -1896,12 +2036,15 @@ $colorBtn.Add_MouseLeftButtonDown({
 
 # Tab Switching Controller
 $script:appletTabs = @{
-    "Ai"    = @{ Tab = $tabAi;    Panel = $panelAi;    Color = "#00f0ff" }
-    "Music" = @{ Tab = $tabMusic; Panel = $panelMusic; Color = "#64d2ff" }
-    "Timer" = @{ Tab = $tabTimer; Panel = $panelTimer; Color = "#00f0a8" }
-    "Shelf" = @{ Tab = $tabShelf; Panel = $panelShelf; Color = "#ffd000" }
-    "Sys"   = @{ Tab = $tabSys;   Panel = $panelSys;   Color = "#ec4899" }
-    "Notes" = @{ Tab = $tabNotes; Panel = $panelNotes; Color = "#a855f7" }
+    "Ai"      = @{ Tab = $tabAi;      Panel = $panelAi;      Color = "#00f0ff" }
+    "Music"   = @{ Tab = $tabMusic;   Panel = $panelMusic;   Color = "#64d2ff" }
+    "Timer"   = @{ Tab = $tabTimer;   Panel = $panelTimer;   Color = "#00f0a8" }
+    "Shelf"   = @{ Tab = $tabShelf;   Panel = $panelShelf;   Color = "#ffd000" }
+    "Sys"     = @{ Tab = $tabSys;     Panel = $panelSys;     Color = "#ec4899" }
+    "Weather" = @{ Tab = $tabWeather; Panel = $panelWeather; Color = "#38bdf8" }
+    "World"   = @{ Tab = $tabWorld;   Panel = $panelWorld;   Color = "#818cf8" }
+    "Banner"  = @{ Tab = $tabBanner;  Panel = $panelBanner;  Color = "#f43f5e" }
+    "Notes"   = @{ Tab = $tabNotes;   Panel = $panelNotes;   Color = "#a855f7" }
 }
 
 function Switch-Tab([string]$tabName) {
@@ -1925,6 +2068,10 @@ function Switch-Tab([string]$tabName) {
         Update-SysStats
     } elseif ($tabName -eq "Shelf") {
         Update-ShelfCount
+    } elseif ($tabName -eq "Weather") {
+        Update-Weather
+    } elseif ($tabName -eq "World") {
+        Update-WorldClocks
     } elseif ($tabName -eq "Notes") {
         $notesBox.Focus() | Out-Null
     }
@@ -1935,6 +2082,9 @@ $tabMusic.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Ta
 $tabTimer.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Timer" })
 $tabShelf.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Shelf" })
 $tabSys.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Sys" })
+$tabWeather.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Weather" })
+$tabWorld.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "World" })
+$tabBanner.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Banner" })
 $tabNotes.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Notes" })
 
 # 1. MUSIC & MEDIA CONTROLS
@@ -2193,6 +2343,118 @@ $notesBox.Add_TextChanged({
         [System.IO.File]::WriteAllText($script:notesFile, $notesBox.Text, [System.Text.Encoding]::UTF8)
         $notesStatus.Text = "Saved • $(Get-Date -Format 'HH:mm')"
     } catch {}
+})
+
+# 6. WEATHER & SKY HUD (Vayli Tool 4)
+$script:weatherC = $true
+$script:lastWeatherObj = $null
+
+function Update-Weather {
+    [System.Threading.ThreadPool]::QueueUserWorkItem({
+        try {
+            $w = Invoke-RestMethod -Uri "https://wttr.in/?format=j1" -TimeoutSec 4 -ErrorAction Stop
+            $script:lastWeatherObj = $w
+            $curr = $w.current_condition[0]
+            $city = $w.nearest_area[0].areaName[0].value
+            $tempC = $curr.temp_C
+            $tempF = $curr.temp_F
+            $desc = $curr.weatherDesc[0].value.Trim()
+            $hum = $curr.humidity
+            $wind = $curr.windspeedKmph
+
+            $window.Dispatcher.Invoke([Action]{
+                $tempStr = if ($script:weatherC) { "$tempC°C" } else { "$tempF°F" }
+                $weatherCityText.Text = "🌤️ $city • $tempStr"
+                $weatherDescText.Text = "$desc • 💧 $hum% • 💨 ${wind}km/h"
+                if (-not $script:isExtended -and $script:activeBanner -eq $null) {
+                    $statusText.Text = "🌤️ $city $tempStr • $desc"
+                }
+            })
+        } catch {
+            $window.Dispatcher.Invoke([Action]{
+                $weatherCityText.Text = "🌤️ Weather Offline"
+                $weatherDescText.Text = "Check your internet connection"
+            })
+        }
+    }) | Out-Null
+}
+
+$weatherRefreshBtn.Add_MouseLeftButtonDown({
+    param($s, $e); $e.Handled = $true
+    Update-Weather
+    $statusText.Text = "🌤️ Refreshing Weather..."
+})
+
+$weatherUnitBtn.Add_MouseLeftButtonDown({
+    param($s, $e); $e.Handled = $true
+    $script:weatherC = -not $script:weatherC
+    if ($script:lastWeatherObj) {
+        $curr = $script:lastWeatherObj.current_condition[0]
+        $city = $script:lastWeatherObj.nearest_area[0].areaName[0].value
+        $tempStr = if ($script:weatherC) { "$($curr.temp_C)°C" } else { "$($curr.temp_F)°F" }
+        $weatherCityText.Text = "🌤️ $city • $tempStr"
+    }
+})
+
+# 7. WORLD CLOCK (Vayli Tool 11)
+function Update-WorldClocks {
+    try {
+        $utc = [DateTime]::UtcNow
+        $tzLon = [TimeZoneInfo]::FindSystemTimeZoneById("GMT Standard Time")
+        $tzNY  = [TimeZoneInfo]::FindSystemTimeZoneById("Eastern Standard Time")
+        $tzTok = [TimeZoneInfo]::FindSystemTimeZoneById("Tokyo Standard Time")
+        $tzDub = [TimeZoneInfo]::FindSystemTimeZoneById("Arabian Standard Time")
+
+        $worldLonText.Text = [TimeZoneInfo]::ConvertTimeFromUtc($utc, $tzLon).ToString("HH:mm")
+        $worldNYText.Text  = [TimeZoneInfo]::ConvertTimeFromUtc($utc, $tzNY).ToString("HH:mm")
+        $worldTokText.Text = [TimeZoneInfo]::ConvertTimeFromUtc($utc, $tzTok).ToString("HH:mm")
+        $worldDubText.Text = [TimeZoneInfo]::ConvertTimeFromUtc($utc, $tzDub).ToString("HH:mm")
+    } catch {}
+}
+
+$worldClockTimer = New-Object System.Windows.Threading.DispatcherTimer
+$worldClockTimer.Interval = [TimeSpan]::FromSeconds(1)
+$worldClockTimer.Add_Tick({
+    if ($script:isExtended -and $panelWorld.Visibility -eq [System.Windows.Visibility]::Visible) {
+        Update-WorldClocks
+    }
+})
+$worldClockTimer.Start()
+
+# 8. NOTCH STATUS BANNER / MARQUEE (Vayli Tool 15)
+$script:activeBanner = $null
+
+function Set-NotchBanner([string]$msg, [string]$colorHex = "#00f0ff") {
+    if ([string]::IsNullOrWhiteSpace($msg)) {
+        Clear-NotchBanner
+        return
+    }
+    $script:activeBanner = $msg
+    $statusText.Text = $msg
+    $statusText.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($colorHex)
+}
+
+function Clear-NotchBanner {
+    $script:activeBanner = $null
+    $statusText.Text = "JARVIS Dynamic Island"
+    $statusText.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#8899aa")
+}
+
+$chipCall.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Set-NotchBanner "🔴 On a call • Busy" "#ff6b8b" })
+$chipBreak.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Set-NotchBanner "☕ Back in 10 mins" "#ffd000" })
+$chipDeep.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Set-NotchBanner "🎯 Deep Work • Do Not Disturb" "#00f0a8" })
+$chipDND.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Set-NotchBanner "🔕 Do Not Disturb" "#a855f7" })
+
+$bannerSetBtn.Add_MouseLeftButtonDown({
+    param($s, $e); $e.Handled = $true
+    if (-not [string]::IsNullOrWhiteSpace($bannerInput.Text)) {
+        Set-NotchBanner $bannerInput.Text "#00f0ff"
+    }
+})
+
+$bannerClearBtn.Add_MouseLeftButtonDown({
+    param($s, $e); $e.Handled = $true
+    Clear-NotchBanner
 })
 
 # Chat input enter key and send button
