@@ -52,15 +52,52 @@ Or just double-click **`launch.bat`**!
 
 ---
 
-## ✨ Features
+## ✨ Features & Vayli Notch Utilities
 
-### 1. 🏝️ Sleek Dynamic Island Dock
-- Docks seamlessly at the top center of your primary monitor.
+### 1. 🏝️ Sleek Dynamic Island Dock & Edge Glow
+- Docks seamlessly at the top center of your primary monitor with an obsidian black OLED aesthetic.
 - **Auto-Hide / Reveal**: Floats down smoothly when you hover your mouse near the top bezel, and docks back up when inactive.
 - **Pin / Float**: Click the pin button to keep the island pinned permanently on top.
-- **Glassmorphism Acrylic Design**: Obsidian black acrylic body with glowing neon cyan borders.
+- **Edge Light Glow**: Subtle neon accent outline and ambient drop-shadow that pulses to match your chosen theme color.
 
-### 2. 👀 Expressive Emotion-Driven OLED Eyes
+### 2. 🎵 Universal Music & Media Controls (Vayli Music)
+- Built-in hardware media controller compatible with **Spotify, YouTube, Chrome, Edge, VLC, Apple Music, and Windows Media Player**.
+- Controls: **Previous (`⏮️`)**, **Play / Pause (`⏯️`)**, **Next (`⏭️`)**, **Volume Down (`🔉`)**, **Volume Up (`🔊`)**, and **Mute (`🔇`)**.
+- Supports natural voice commands: *"play music"*, *"pause music"*, *"next track"*, *"volume up"*, *"mute"*.
+
+### 3. ⏱️ Focus & Pomodoro Timer (Vayli Focus)
+- Built-in 25-minute Pomodoro focus block and 5-minute break timer.
+- Real-time digital clock display in the notch with live countdown updates.
+- Audio chimes and voice alerts when focus or break sessions finish.
+- Supports voice commands: *"start pomodoro"*, *"take break"*, *"reset timer"*.
+
+### 4. 📁 Vayli Drop & File Shelf ("Jarvis Shelf")
+- **Drag & Drop Staging**: Drag any files from Windows Explorer onto the notch at the top of your screen to park them instantly!
+- When files are hovered over the island, the notch lights up in emerald green. Dropping saves them to your dedicated shelf directory (`Documents\JarvisShelf`).
+- Includes **1-Click Open Shelf Folder** and **Clear Shelf** controls.
+- Voice commands: *"open shelf"*, *"file shelf"*.
+
+### 5. 💻 Real-Time System Hardware HUD
+- Displays live hardware telemetry:
+  - **CPU Load %**
+  - **RAM Usage** (Used GB / Total Visible GB and %)
+  - **Battery Status & Power State** (⚡ Plugged In / 🔋 Battery %)
+- Auto-refreshes every 3 seconds while viewing the Sys applet.
+- Voice commands: *"system status"*, *"battery status"*, *"cpu usage"*.
+
+### 6. 📝 Instant Quick Notes Scratchpad
+- A distraction-free notepad built right into the dynamic notch.
+- Automatically saves text to `quick_notes.txt` on every keystroke.
+- Voice commands: *"open notes"*, *"quick notes"*.
+
+### 7. 📋 Built-in Clipboard History Pop-Up Screen
+- Automatically monitors your clipboard in the background—every `Ctrl+C` text clip is saved with a timestamp and character count.
+- **Click `📋 Clip` in the island tray**: Opens a dedicated floating glass pop-up window.
+- **Real-Time Search**: Filter through your historical clips instantly.
+- **1-Click Copy**: Click any card to re-copy it to your active clipboard (flashes `✓ Copied!`).
+- **Win+V Integration**: Includes a button to invoke Windows 11's native clipboard history.
+
+### 8. 👀 Expressive Emotion-Driven OLED Robot Eyes
 - Cyberpunk dual OLED robotic eyes that dynamically morph based on what you ask or say:
   - 🧐 **Curious / Inquisitive**: Questions (*"what is...", "why does...", "who was..."*).
   - 🤩 **Excited**: Fun topics, jokes, celebrations.
@@ -68,25 +105,17 @@ Or just double-click **`launch.bat`**!
   - 😮 **Surprised**: Astronomy, cosmos, quantum science facts.
   - 😉 **Wink**: Confirming commands (*opening apps, taking screenshots*).
   - 😊 **Happy**: Standard friendly dialogue.
-- **Mouth / Speech Pulse**: Eyes pulse naturally in sync with voice output when JARVIS speaks.
-- Negative emotions (*angry, sad, dizzy*) have been permanently removed for a positive companion feel.
+- **Living Micro-Saccades**: Eyes naturally track your mouse cursor across the screen.
 
-### 3. 🎙️ Sub-Second Local AI & Faster-Whisper Voice
-- **Direct Answers Only**: No robotic filler (*"The system is processing your query..."*) and no hallucinated vision claims (*"I am scanning the room..."*).
+### 9. 🎙️ Sub-Second Local AI & Faster-Whisper Voice
+- **Direct Answers Only**: No robotic filler (*"The system is processing your query..."*) and no hallucinated vision claims.
 - **Faster-Whisper Neural Speech Recognition**: Uses `faster-whisper` (`base.en` with int8 quantization and VAD filtering) running locally for near 100% voice accuracy in ~0.4s.
 - **Sub-Second Q&A**: Powered by local Ollama (`qwen3.5:2b`) answering in 300ms–600ms.
 
-### 4. 📋 Built-in Clipboard History Pop-Up Screen
-- Automatically monitors your clipboard in the background—every `Ctrl+C` text clip is saved with a timestamp and character count.
-- **Click `📋 Clip` in the island tray**: Opens a dedicated floating glass pop-up window.
-- **Real-Time Search**: Filter through your historical clips instantly.
-- **1-Click Copy**: Click any card to re-copy it to your active clipboard (flashes `✓ Copied!`).
-- **Win+V Integration**: Includes a button to invoke Windows 11's native clipboard history.
-
-### 5. 🛠️ Productivity Shortcuts
+### 10. 📸 Productivity & System Shortcuts
 - **Open Apps**: Speak or type *"open chrome"*, *"open notepad"*, *"open vscode"*, *"open calc"*, *"open spotify"*, *"open settings"*.
 - **Instant Screenshots**: Tap `📸 Shot` or say *"take screenshot"* to capture your screen directly to `Pictures\Screenshots` and copy it to your clipboard.
-- **Color Accent Switcher**: Cycle island neon theme accents with a click.
+- **Color Accent Switcher**: Cycle neon theme accents (Cyan, Yellow, Green, Pink, Blue, Purple) with one click.
 
 ---
 

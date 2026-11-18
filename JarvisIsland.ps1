@@ -65,11 +65,45 @@ public class WinKeyHelper {
     public const int KEYEVENTF_KEYUP = 0x0002;
     public const byte VK_LWIN = 0x5B;
     public const byte VK_V = 0x56;
+
+    public const byte VK_MEDIA_NEXT_TRACK = 0xB0;
+    public const byte VK_MEDIA_PREV_TRACK = 0xB1;
+    public const byte VK_MEDIA_STOP = 0xB2;
+    public const byte VK_MEDIA_PLAY_PAUSE = 0xB3;
+    public const byte VK_VOLUME_MUTE = 0xAD;
+    public const byte VK_VOLUME_DOWN = 0xAE;
+    public const byte VK_VOLUME_UP = 0xAF;
+
     public static void OpenWinV() {
         keybd_event(VK_LWIN, 0, 0, 0);
         keybd_event(VK_V, 0, 0, 0);
         keybd_event(VK_V, 0, KEYEVENTF_KEYUP, 0);
         keybd_event(VK_LWIN, 0, KEYEVENTF_KEYUP, 0);
+    }
+
+    public static void MediaPlayPause() {
+        keybd_event(VK_MEDIA_PLAY_PAUSE, 0, 0, 0);
+        keybd_event(VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_KEYUP, 0);
+    }
+    public static void MediaNext() {
+        keybd_event(VK_MEDIA_NEXT_TRACK, 0, 0, 0);
+        keybd_event(VK_MEDIA_NEXT_TRACK, 0, KEYEVENTF_KEYUP, 0);
+    }
+    public static void MediaPrev() {
+        keybd_event(VK_MEDIA_PREV_TRACK, 0, 0, 0);
+        keybd_event(VK_MEDIA_PREV_TRACK, 0, KEYEVENTF_KEYUP, 0);
+    }
+    public static void VolumeUp() {
+        keybd_event(VK_VOLUME_UP, 0, 0, 0);
+        keybd_event(VK_VOLUME_UP, 0, KEYEVENTF_KEYUP, 0);
+    }
+    public static void VolumeDown() {
+        keybd_event(VK_VOLUME_DOWN, 0, 0, 0);
+        keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, 0);
+    }
+    public static void VolumeMute() {
+        keybd_event(VK_VOLUME_MUTE, 0, 0, 0);
+        keybd_event(VK_VOLUME_MUTE, 0, KEYEVENTF_KEYUP, 0);
     }
 }
 "@ -ReferencedAssemblies System.Speech
@@ -174,8 +208,8 @@ function Ensure-WhisperRunning {
 $null = Ensure-WhisperRunning
 
 $screenW = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width
-$islandW = 290
-$islandH = 175
+$islandW = 340
+$islandH = 205
 $posX = [int](($screenW - $islandW) / 2)
 
 [xml]$xaml = @"
@@ -189,11 +223,12 @@ $posX = [int](($screenW - $islandW) / 2)
     <Grid>
         <!-- The Dynamic Island Pill -->
         <Border Name="IslandBorder"
-                Width="260" Height="70"
+                Width="330" Height="70"
                 VerticalAlignment="Top" HorizontalAlignment="Center"
                 Background="#040608"
                 CornerRadius="0,0,26,26"
                 BorderThickness="1,0,1,1" BorderBrush="#24ffffff"
+                AllowDrop="True"
                 Cursor="Arrow"
                 RenderTransformOrigin="0.5,0">
             <Border.RenderTransform>
@@ -341,49 +376,147 @@ $posX = [int](($screenW - $islandW) / 2)
                             Margin="0,0,0,8"
                             Opacity="0"
                             Visibility="Collapsed">
-                    <!-- Quick Actions Row -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                        <Border Name="MicBtn" Width="44" Height="24" CornerRadius="12"
-                                Background="#1a00f0a8" BorderBrush="#00f0a8" BorderThickness="1"
-                                Cursor="Hand" Margin="2,0" ToolTip="Voice (Click to Speak)">
-                            <TextBlock Name="MicText" Text="🎙️ Mic" FontSize="9" FontWeight="Bold"
-                                       Foreground="#00f0a8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
 
-                        <Border Name="ClipBtn" Width="44" Height="24" CornerRadius="12"
-                                Background="#1affffff" BorderBrush="#33ffffff" BorderThickness="1"
-                                Cursor="Hand" Margin="2,0" ToolTip="Clipboard History (Click to Open Pop-Up)">
-                            <TextBlock Text="📋 Clip" FontSize="9" FontWeight="SemiBold"
-                                       Foreground="#ffffff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <!-- VAYLI NOTCH APPLET SELECTOR ROW -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,6">
+                        <Border Name="TabAi" Background="#2600f0ff" BorderBrush="#00f0ff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="AI Assistant (Voice &amp; Chat)">
+                            <TextBlock Text="💬 AI" FontSize="9" FontWeight="Bold" Foreground="#00f0ff"/>
                         </Border>
-
-                        <Border Name="ShotBtn" Width="44" Height="24" CornerRadius="12"
-                                Background="#1affffff" BorderBrush="#33ffffff" BorderThickness="1"
-                                Cursor="Hand" Margin="2,0" ToolTip="Take Screenshot">
-                            <TextBlock Text="📸 Shot" FontSize="9" FontWeight="SemiBold"
-                                       Foreground="#ffffff" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border Name="TabMusic" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Music &amp; Media Controls">
+                            <TextBlock Text="🎵 Music" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
                         </Border>
-
-                        <Border Name="ColorBtn" Width="24" Height="24" CornerRadius="12"
-                                Background="#1affffff" BorderBrush="#33ffffff" BorderThickness="1"
-                                Cursor="Hand" Margin="2,0" ToolTip="Change Color">
-                            <TextBlock Text="🎨" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border Name="TabTimer" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Focus &amp; Pomodoro Timer">
+                            <TextBlock Text="⏱️ Focus" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        </Border>
+                        <Border Name="TabShelf" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Vayli Drop / File Shelf">
+                            <TextBlock Text="📁 Shelf" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        </Border>
+                        <Border Name="TabSys" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="System Hardware Monitor">
+                            <TextBlock Text="💻 Sys" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        </Border>
+                        <Border Name="TabNotes" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Quick Scratchpad Notes">
+                            <TextBlock Text="📝 Note" FontSize="9" FontWeight="SemiBold" Foreground="#88a0b8"/>
+                        </Border>
+                        <Border Name="ClipBtn" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Clipboard History Modal">
+                            <TextBlock Text="📋" FontSize="9" Foreground="#ffffff"/>
+                        </Border>
+                        <Border Name="ShotBtn" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Screenshot Snipping">
+                            <TextBlock Text="📸" FontSize="9" Foreground="#ffffff"/>
+                        </Border>
+                        <Border Name="ColorBtn" Background="#14ffffff" BorderBrush="#26ffffff" BorderThickness="1" CornerRadius="6" Padding="5,2" Margin="1.5,0" Cursor="Hand" ToolTip="Change Theme Neon Glow">
+                            <TextBlock Text="🎨" FontSize="9" Foreground="#ffffff"/>
                         </Border>
                     </StackPanel>
 
-                    <!-- Type Input Box for AI -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBox Name="ChatInput" Width="180" Height="22"
-                                 Background="#141c24" BorderBrush="#33ffffff" BorderThickness="1"
-                                 Foreground="#ffffff" FontSize="10" Padding="4,2"
-                                 VerticalContentAlignment="Center"
-                                 ToolTip="Type anything to ask Jarvis (Press Enter)"/>
-                        <Border Name="SendBtn" Width="26" Height="22" CornerRadius="4"
-                                Background="#00f0ff" Cursor="Hand" Margin="3,0,0,0" ToolTip="Send">
-                            <TextBlock Text="➤" FontSize="10" FontWeight="Bold" Foreground="#000000"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </StackPanel>
+                    <!-- APPLET PANELS CONTAINER -->
+                    <Grid Width="314" Height="62">
+                        <!-- Panel 1: AI Assistant (Voice & Chat) -->
+                        <Grid Name="PanelAi" Visibility="Visible">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Border Name="MicBtn" Width="52" Height="26" CornerRadius="13"
+                                        Background="#1a00f0a8" BorderBrush="#00f0a8" BorderThickness="1"
+                                        Cursor="Hand" Margin="0,0,6,0" ToolTip="Voice (Click to Speak / Click to Stop)">
+                                    <TextBlock Name="MicText" Text="🎙️ Mic" FontSize="9.5" FontWeight="Bold"
+                                               Foreground="#00f0a8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBox Name="ChatInput" Width="216" Height="26"
+                                         Background="#141c24" BorderBrush="#33ffffff" BorderThickness="1"
+                                         Foreground="#ffffff" FontSize="10.5" Padding="6,3"
+                                         VerticalContentAlignment="Center"
+                                         ToolTip="Type question for JARVIS (Press Enter)"/>
+                                <Border Name="SendBtn" Width="30" Height="26" CornerRadius="6"
+                                        Background="#00f0ff" Cursor="Hand" Margin="4,0,0,0" ToolTip="Send">
+                                    <TextBlock Text="➤" FontSize="11" FontWeight="Bold" Foreground="#000000"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Panel 2: Music & Media Controls -->
+                        <StackPanel Name="PanelMusic" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">
+                                <Border Name="MusicPrevBtn" Width="34" Height="26" CornerRadius="6" Background="#182232" BorderBrush="#2e4258" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Previous Track">
+                                    <TextBlock Text="⏮️" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="MusicPlayPauseBtn" Width="44" Height="26" CornerRadius="6" Background="#2400f0ff" BorderBrush="#00f0ff" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Play / Pause">
+                                    <TextBlock Text="⏯️" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="MusicNextBtn" Width="34" Height="26" CornerRadius="6" Background="#182232" BorderBrush="#2e4258" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Next Track">
+                                    <TextBlock Text="⏭️" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="MusicVolDownBtn" Width="34" Height="26" CornerRadius="6" Background="#182232" BorderBrush="#2e4258" BorderThickness="1" Cursor="Hand" Margin="4,0,2,0" ToolTip="Volume Down">
+                                    <TextBlock Text="🔉" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="MusicVolUpBtn" Width="34" Height="26" CornerRadius="6" Background="#182232" BorderBrush="#2e4258" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Volume Up">
+                                    <TextBlock Text="🔊" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="MusicMuteBtn" Width="34" Height="26" CornerRadius="6" Background="#182232" BorderBrush="#2e4258" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Mute / Unmute">
+                                    <TextBlock Text="🔇" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Text="Media Controller • Spotify • YouTube • Browser • Windows" FontSize="8.5" Foreground="#607b99" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Panel 3: Focus & Pomodoro Timer -->
+                        <StackPanel Name="PanelTimer" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,3">
+                                <TextBlock Name="TimerDisplay" Text="25:00" FontSize="17" FontWeight="Bold" Foreground="#00f0ff" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <Border Name="TimerStartBtn" Width="60" Height="25" CornerRadius="6" Background="#1a00f0a8" BorderBrush="#00f0a8" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Start / Pause Session">
+                                    <TextBlock Name="TimerStartText" Text="▶ Start" FontSize="9.5" FontWeight="Bold" Foreground="#00f0a8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="TimerBreakBtn" Width="56" Height="25" CornerRadius="6" Background="#182232" BorderBrush="#2e4258" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="5-Minute Short Break">
+                                    <TextBlock Text="☕ 5m Break" FontSize="9" Foreground="#a0c0e0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="TimerResetBtn" Width="52" Height="25" CornerRadius="6" Background="#1c1622" BorderBrush="#442233" BorderThickness="1" Cursor="Hand" Margin="2,0" ToolTip="Reset Timer to 25m">
+                                    <TextBlock Text="⏹ Reset" FontSize="9" Foreground="#ff6b8b" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Name="TimerModeLabel" Text="Pomodoro Focus Session • 25 min" FontSize="8.5" Foreground="#607b99" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Panel 4: Vayli Drop / File Shelf -->
+                        <StackPanel Name="PanelShelf" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,4">
+                                <Border Name="OpenShelfBtn" Height="26" CornerRadius="6" Background="#1a00f0ff" BorderBrush="#00f0ff" BorderThickness="1" Padding="8,3" Cursor="Hand" Margin="0,0,6,0" ToolTip="Open Staging Folder in Explorer">
+                                    <TextBlock Name="ShelfCountText" Text="📂 Open Shelf (0 items)" FontSize="9.5" FontWeight="Bold" Foreground="#00f0ff" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border Name="ClearShelfBtn" Height="26" CornerRadius="6" Background="#1c1622" BorderBrush="#442233" BorderThickness="1" Padding="8,3" Cursor="Hand" ToolTip="Clear Parked Items in Shelf">
+                                    <TextBlock Text="🗑️ Clear Shelf" FontSize="9.5" FontWeight="SemiBold" Foreground="#ff6b8b" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Text="Drag &amp; drop any files onto the notch to park them instantly!" FontSize="8.5" Foreground="#607b99" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Panel 5: System Hardware Monitor HUD -->
+                        <StackPanel Name="PanelSys" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
+                                <Border Background="#101724" BorderBrush="#22344c" BorderThickness="1" CornerRadius="6" Padding="6,4" Margin="2,0">
+                                    <TextBlock Name="SysCpuText" Text="💻 CPU: --%" FontSize="9.5" FontWeight="SemiBold" Foreground="#64d2ff"/>
+                                </Border>
+                                <Border Background="#101724" BorderBrush="#22344c" BorderThickness="1" CornerRadius="6" Padding="6,4" Margin="2,0">
+                                    <TextBlock Name="SysRamText" Text="🧠 RAM: --" FontSize="9.5" FontWeight="SemiBold" Foreground="#00f0a8"/>
+                                </Border>
+                                <Border Background="#101724" BorderBrush="#22344c" BorderThickness="1" CornerRadius="6" Padding="6,4" Margin="2,0">
+                                    <TextBlock Name="SysBattText" Text="🔋 --%" FontSize="9.5" FontWeight="SemiBold" Foreground="#ffd000"/>
+                                </Border>
+                                <Border Name="SysRefreshBtn" Width="24" Height="24" CornerRadius="12" Background="#141f2d" BorderBrush="#283d56" BorderThickness="1" Cursor="Hand" Margin="3,0,0,0" ToolTip="Refresh Hardware Stats">
+                                    <TextBlock Text="🔄" FontSize="9" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock Text="Live Hardware Status • Auto-refreshes" FontSize="8.5" Foreground="#607b99" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Panel 6: Quick Scratchpad Notes -->
+                        <Grid Name="PanelNotes" Visibility="Collapsed">
+                            <TextBox Name="NotesBox" Height="44" Width="306"
+                                     Background="#101620" BorderBrush="#283a50" BorderThickness="1"
+                                     Foreground="#ffffff" FontSize="9.5" Padding="6,4"
+                                     AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                     ToolTip="Instant Scratchpad (Auto-saved)"/>
+                            <TextBlock Name="NotesStatus" Text="Auto-saved" FontSize="8" Foreground="#44607a"
+                                       HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,2" IsHitTestVisible="False"/>
+                        </Grid>
+                    </Grid>
                 </StackPanel>
             </Grid>
         </Border>
@@ -408,6 +541,47 @@ $shotBtn       = $window.FindName("ShotBtn")
 $colorBtn      = $window.FindName("ColorBtn")
 $chatInput     = $window.FindName("ChatInput")
 $sendBtn       = $window.FindName("SendBtn")
+
+# Vayli Element References
+$tabAi             = $window.FindName("TabAi")
+$tabMusic          = $window.FindName("TabMusic")
+$tabTimer          = $window.FindName("TabTimer")
+$tabShelf          = $window.FindName("TabShelf")
+$tabSys            = $window.FindName("TabSys")
+$tabNotes          = $window.FindName("TabNotes")
+
+$panelAi           = $window.FindName("PanelAi")
+$panelMusic        = $window.FindName("PanelMusic")
+$panelTimer        = $window.FindName("PanelTimer")
+$panelShelf        = $window.FindName("PanelShelf")
+$panelSys          = $window.FindName("PanelSys")
+$panelNotes        = $window.FindName("PanelNotes")
+
+$musicPrevBtn      = $window.FindName("MusicPrevBtn")
+$musicPlayPauseBtn = $window.FindName("MusicPlayPauseBtn")
+$musicNextBtn      = $window.FindName("MusicNextBtn")
+$musicVolDownBtn   = $window.FindName("MusicVolDownBtn")
+$musicVolUpBtn     = $window.FindName("MusicVolUpBtn")
+$musicMuteBtn      = $window.FindName("MusicMuteBtn")
+
+$timerDisplay      = $window.FindName("TimerDisplay")
+$timerStartBtn     = $window.FindName("TimerStartBtn")
+$timerStartText    = $window.FindName("TimerStartText")
+$timerBreakBtn     = $window.FindName("TimerBreakBtn")
+$timerResetBtn     = $window.FindName("TimerResetBtn")
+$timerModeLabel    = $window.FindName("TimerModeLabel")
+
+$openShelfBtn      = $window.FindName("OpenShelfBtn")
+$shelfCountText    = $window.FindName("ShelfCountText")
+$clearShelfBtn     = $window.FindName("ClearShelfBtn")
+
+$sysCpuText        = $window.FindName("SysCpuText")
+$sysRamText        = $window.FindName("SysRamText")
+$sysBattText       = $window.FindName("SysBattText")
+$sysRefreshBtn     = $window.FindName("SysRefreshBtn")
+
+$notesBox          = $window.FindName("NotesBox")
+$notesStatus       = $window.FindName("NotesStatus")
 
 $eyeLeft       = $window.FindName("EyeLeft")
 $eyeRight      = $window.FindName("EyeRight")
@@ -521,7 +695,7 @@ function Animate-Island([double]$targetY) {
 function Toggle-Extend() {
     $script:isExtended = -not $script:isExtended
 
-    $targetH = if ($script:isExtended) { 142.0 } else { 70.0 }
+    $targetH = if ($script:isExtended) { 178.0 } else { 70.0 }
     $animH = New-Object System.Windows.Media.Animation.DoubleAnimation
     $animH.To = $targetH
     $animH.Duration = [TimeSpan]::FromMilliseconds(240)
@@ -582,6 +756,10 @@ function Set-EyeColor($hex) {
     $eyeRight.Effect.Color = $color
     $happyLeft.Stroke = $brush
     $happyRight.Stroke = $brush
+
+    try {
+        $islandBorder.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#33" + $hex.Substring(1))
+    } catch {}
 }
 
 # ==================== DYNAMIC EYE ANIMATION SUITE ====================
@@ -1272,6 +1450,95 @@ function Execute-VoiceCommand([string]$cmd) {
         return
     }
 
+    # Vayli 1: Media / Music playback controls
+    if ($lower -match "^(?:play|pause|resume)\s*(?:music|song|track)?$" -or $lower -match "play music|pause music|toggle music") {
+        [WinKeyHelper]::MediaPlayPause()
+        Speak-Jarvis "Toggled playback." "happy"
+        return
+    }
+    if ($lower -match "next\s*(?:song|track)?" -or $lower -match "skip\s*(?:song|track)?") {
+        [WinKeyHelper]::MediaNext()
+        Speak-Jarvis "Next track." "happy"
+        return
+    }
+    if ($lower -match "previous\s*(?:song|track)?" -or $lower -match "prev\s*(?:song|track)?") {
+        [WinKeyHelper]::MediaPrev()
+        Speak-Jarvis "Previous track." "happy"
+        return
+    }
+    if ($lower -match "volume\s*up|louder") {
+        [WinKeyHelper]::VolumeUp(); [WinKeyHelper]::VolumeUp()
+        Speak-Jarvis "Volume up." "happy"
+        return
+    }
+    if ($lower -match "volume\s*down|softer|quieter") {
+        [WinKeyHelper]::VolumeDown(); [WinKeyHelper]::VolumeDown()
+        Speak-Jarvis "Volume down." "happy"
+        return
+    }
+    if ($lower -match "mute|unmute") {
+        [WinKeyHelper]::VolumeMute()
+        Speak-Jarvis "Mute toggled." "happy"
+        return
+    }
+
+    # Vayli 2: Focus & Pomodoro Timer
+    if ($lower -match "start\s*pomodoro|start\s*focus|focus\s*timer|pomodoro") {
+        if (-not $script:isExtended) { Toggle-Extend }
+        Switch-Tab "Timer"
+        $script:timerMode = "Focus"
+        $script:timerSeconds = 1500
+        $script:timerRunning = $true
+        $timerModeLabel.Text = "Pomodoro Focus Session • 25 min"
+        $timerStartText.Text = "⏸ Pause"
+        Update-TimerDisplay
+        Speak-Jarvis "Pomodoro timer started for 25 minutes." "excited"
+        return
+    }
+    if ($lower -match "take\s*break|break\s*timer|five\s*minute\s*break") {
+        if (-not $script:isExtended) { Toggle-Extend }
+        Switch-Tab "Timer"
+        $script:timerMode = "Break"
+        $script:timerSeconds = 300
+        $script:timerRunning = $true
+        $timerModeLabel.Text = "Short Break • 5 min"
+        $timerStartText.Text = "⏸ Pause"
+        Update-TimerDisplay
+        Speak-Jarvis "5-minute break timer started." "happy"
+        return
+    }
+    if ($lower -match "stop\s*timer|reset\s*timer|cancel\s*timer") {
+        $script:timerRunning = $false
+        $timerStartText.Text = "▶ Start"
+        $statusText.Text = "⏱️ Timer Stopped"
+        Speak-Jarvis "Timer stopped." "happy"
+        return
+    }
+
+    # Vayli 3: System Hardware Status HUD
+    if ($lower -match "system\s*status|hardware\s*status|battery\s*status|battery\s*percentage|cpu\s*usage") {
+        Update-SysStats
+        if (-not $script:isExtended) { Toggle-Extend }
+        Switch-Tab "Sys"
+        Speak-Jarvis "Battery is at $script:lastBattPct percent. RAM load is $script:lastRamPct percent." "happy"
+        return
+    }
+
+    # Vayli 4: Quick Notes Scratchpad
+    if ($lower -match "open\s*notes?|show\s*notes?|quick\s*notes?|scratchpad") {
+        if (-not $script:isExtended) { Toggle-Extend }
+        Switch-Tab "Notes"
+        Speak-Jarvis "Here are your quick notes." "happy"
+        return
+    }
+
+    # Vayli 5: File Shelf / Drop folder
+    if ($lower -match "open\s*shelf|show\s*shelf|file\s*shelf|drop\s*folder") {
+        Start-Process "explorer.exe" -ArgumentList "`"$script:shelfDir`""
+        Speak-Jarvis "Opening your Jarvis Shelf folder." "happy"
+        return
+    }
+
     # 3. App Opener
     if ($lower -match '^(?:please\s+)?(?:open|launch|start)\s+(.+)$') {
         $app = $matches[1].Trim()
@@ -1621,6 +1888,311 @@ $colorBtn.Add_MouseLeftButtonDown({
     $script:colorIndex = ($script:colorIndex + 1) % $script:colors.Count
     Set-EyeColor $script:colors[$script:colorIndex].Hex
     Play-WinkAnimation
+})
+
+# ==============================================================================
+# VAYLI NOTCH APPLET CONTROLLERS & EVENT HANDLERS
+# ==============================================================================
+
+# Tab Switching Controller
+$script:appletTabs = @{
+    "Ai"    = @{ Tab = $tabAi;    Panel = $panelAi;    Color = "#00f0ff" }
+    "Music" = @{ Tab = $tabMusic; Panel = $panelMusic; Color = "#64d2ff" }
+    "Timer" = @{ Tab = $tabTimer; Panel = $panelTimer; Color = "#00f0a8" }
+    "Shelf" = @{ Tab = $tabShelf; Panel = $panelShelf; Color = "#ffd000" }
+    "Sys"   = @{ Tab = $tabSys;   Panel = $panelSys;   Color = "#ec4899" }
+    "Notes" = @{ Tab = $tabNotes; Panel = $panelNotes; Color = "#a855f7" }
+}
+
+function Switch-Tab([string]$tabName) {
+    foreach ($k in $script:appletTabs.Keys) {
+        $entry = $script:appletTabs[$k]
+        if ($k -eq $tabName) {
+            $entry.Panel.Visibility = [System.Windows.Visibility]::Visible
+            $entry.Tab.Background = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#26" + $entry.Color.Substring(1))
+            $entry.Tab.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($entry.Color)
+            $txt = $entry.Tab.Child
+            if ($txt) { $txt.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString($entry.Color) }
+        } else {
+            $entry.Panel.Visibility = [System.Windows.Visibility]::Collapsed
+            $entry.Tab.Background = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#14ffffff")
+            $entry.Tab.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#26ffffff")
+            $txt = $entry.Tab.Child
+            if ($txt) { $txt.Foreground = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#88a0b8") }
+        }
+    }
+    if ($tabName -eq "Sys") {
+        Update-SysStats
+    } elseif ($tabName -eq "Shelf") {
+        Update-ShelfCount
+    } elseif ($tabName -eq "Notes") {
+        $notesBox.Focus() | Out-Null
+    }
+}
+
+$tabAi.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Ai" })
+$tabMusic.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Music" })
+$tabTimer.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Timer" })
+$tabShelf.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Shelf" })
+$tabSys.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Sys" })
+$tabNotes.Add_MouseLeftButtonDown({ param($s, $e); $e.Handled = $true; Switch-Tab "Notes" })
+
+# 1. MUSIC & MEDIA CONTROLS
+$musicPrevBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    [WinKeyHelper]::MediaPrev()
+    $statusText.Text = "⏮️ Previous Track"
+})
+$musicPlayPauseBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    [WinKeyHelper]::MediaPlayPause()
+    $statusText.Text = "⏯️ Play / Pause"
+})
+$musicNextBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    [WinKeyHelper]::MediaNext()
+    $statusText.Text = "⏭️ Next Track"
+})
+$musicVolDownBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    [WinKeyHelper]::VolumeDown()
+    [WinKeyHelper]::VolumeDown()
+    $statusText.Text = "🔉 Volume Down"
+})
+$musicVolUpBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    [WinKeyHelper]::VolumeUp()
+    [WinKeyHelper]::VolumeUp()
+    $statusText.Text = "🔊 Volume Up"
+})
+$musicMuteBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    [WinKeyHelper]::VolumeMute()
+    $statusText.Text = "🔇 Volume Mute"
+})
+
+# 2. FOCUS & POMODORO TIMER
+$script:timerSeconds = 1500  # 25 min default
+$script:timerRunning = $false
+$script:timerMode = "Focus" # or "Break"
+
+function Update-TimerDisplay {
+    $mins = [Math]::Floor($script:timerSeconds / 60)
+    $secs = $script:timerSeconds % 60
+    $timeStr = "{0:D2}:{1:D2}" -f $mins, $secs
+    $timerDisplay.Text = $timeStr
+    if ($script:timerRunning -and -not $script:isExtended) {
+        $statusText.Text = "⏱️ $script:timerMode: $timeStr"
+    }
+}
+
+$pomodoroTimer = New-Object System.Windows.Threading.DispatcherTimer
+$pomodoroTimer.Interval = [TimeSpan]::FromSeconds(1)
+$pomodoroTimer.Add_Tick({
+    if ($script:timerRunning) {
+        if ($script:timerSeconds -gt 0) {
+            $script:timerSeconds--
+            Update-TimerDisplay
+        } else {
+            $script:timerRunning = $false
+            $timerStartText.Text = "▶ Start"
+            [System.Media.SystemSounds]::Asterisk.Play()
+            if ($script:timerMode -eq "Focus") {
+                Speak-Jarvis "Focus session complete! Take a 5-minute break." "excited"
+            } else {
+                Speak-Jarvis "Break finished! Ready to begin next session?" "happy"
+            }
+        }
+    }
+})
+$pomodoroTimer.Start()
+
+$timerStartBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    $script:timerRunning = -not $script:timerRunning
+    if ($script:timerRunning) {
+        $timerStartText.Text = "⏸ Pause"
+        $statusText.Text = "⏱️ $script:timerMode Started"
+    } else {
+        $timerStartText.Text = "▶ Start"
+        $statusText.Text = "⏱️ $script:timerMode Paused"
+    }
+})
+
+$timerBreakBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    $script:timerMode = "Break"
+    $script:timerSeconds = 300
+    $script:timerRunning = $true
+    $timerModeLabel.Text = "Short Break • 5 min"
+    $timerStartText.Text = "⏸ Pause"
+    Update-TimerDisplay
+    Speak-Jarvis "5-minute break started." "happy"
+})
+
+$timerResetBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    $script:timerMode = "Focus"
+    $script:timerSeconds = 1500
+    $script:timerRunning = $false
+    $timerModeLabel.Text = "Pomodoro Focus Session • 25 min"
+    $timerStartText.Text = "▶ Start"
+    Update-TimerDisplay
+    $statusText.Text = "⏱️ Timer Reset"
+})
+
+# 3. VAYLI DROP / FILE SHELF STAGING
+$script:shelfDir = Join-Path ([Environment]::GetFolderPath("MyDocuments")) "JarvisShelf"
+if (-not (Test-Path $script:shelfDir)) {
+    New-Item -ItemType Directory -Path $script:shelfDir -Force | Out-Null
+}
+
+function Update-ShelfCount {
+    try {
+        $items = Get-ChildItem -Path $script:shelfDir -ErrorAction SilentlyContinue
+        $cnt = if ($items) { $items.Count } else { 0 }
+        $shelfCountText.Text = "📂 Open Shelf ($cnt item$(if($cnt -ne 1){'s'}else{''}))"
+    } catch {}
+}
+Update-ShelfCount
+
+$openShelfBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    Start-Process "explorer.exe" -ArgumentList "`"$script:shelfDir`""
+})
+
+$clearShelfBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    try {
+        Get-ChildItem -Path $script:shelfDir -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+        Update-ShelfCount
+        $statusText.Text = "🗑️ Shelf cleared"
+        Speak-Jarvis "Jarvis shelf cleared." "wink"
+    } catch {}
+})
+
+# Drag & Drop onto IslandBorder (Vayli Drop)
+$islandBorder.Add_DragEnter({
+    param($s, $e)
+    if ($e.Data.GetDataPresent([System.Windows.DataFormats]::FileDrop)) {
+        $e.Effects = [System.Windows.DragDropEffects]::Copy
+        $e.Handled = $true
+        $islandBorder.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#00f0a8")
+        $islandBorder.BorderThickness = New-Object System.Windows.Thickness(2, 0, 2, 2)
+        $statusText.Text = "📥 Drop files to Jarvis Shelf!"
+    }
+})
+
+$islandBorder.Add_DragOver({
+    param($s, $e)
+    if ($e.Data.GetDataPresent([System.Windows.DataFormats]::FileDrop)) {
+        $e.Effects = [System.Windows.DragDropEffects]::Copy
+        $e.Handled = $true
+    }
+})
+
+$islandBorder.Add_DragLeave({
+    param($s, $e)
+    $islandBorder.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#24ffffff")
+    $islandBorder.BorderThickness = New-Object System.Windows.Thickness(1, 0, 1, 1)
+})
+
+$islandBorder.Add_Drop({
+    param($s, $e)
+    $islandBorder.BorderBrush = (New-Object System.Windows.Media.BrushConverter).ConvertFromString("#24ffffff")
+    $islandBorder.BorderThickness = New-Object System.Windows.Thickness(1, 0, 1, 1)
+    if ($e.Data.GetDataPresent([System.Windows.DataFormats]::FileDrop)) {
+        $e.Handled = $true
+        [string[]]$droppedFiles = $e.Data.GetData([System.Windows.DataFormats]::FileDrop)
+        $count = 0
+        foreach ($file in $droppedFiles) {
+            if (Test-Path $file) {
+                $leaf = Split-Path $file -Leaf
+                $dest = Join-Path $script:shelfDir $leaf
+                Copy-Item -Path $file -Destination $dest -Force -ErrorAction SilentlyContinue
+                $count++
+            }
+        }
+        Update-ShelfCount
+        [System.Media.SystemSounds]::Beep.Play()
+        Speak-Jarvis "$count file$(if($count -ne 1){'s'}else{''}) parked in Shelf!" "happy"
+    }
+})
+
+# 4. SYSTEM HARDWARE MONITOR HUD
+$script:lastCpu = 0
+$script:lastRamPct = 0
+$script:lastBattPct = 100
+
+function Update-SysStats {
+    try {
+        # Memory
+        $mem = Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue
+        if ($mem) {
+            $totalGB = [math]::Round($mem.TotalVisibleMemorySize / 1MB, 1)
+            $freeGB = [math]::Round($mem.FreePhysicalMemory / 1MB, 1)
+            $usedGB = [math]::Round($totalGB - $freeGB, 1)
+            $ramPct = [math]::Round(($usedGB / $totalGB) * 100)
+            $script:lastRamPct = $ramPct
+            $sysRamText.Text = "🧠 RAM: $usedGB/${totalGB}G ($ramPct%)"
+        }
+
+        # Battery
+        $pwr = [System.Windows.Forms.SystemInformation]::PowerStatus
+        $battPct = [math]::Round($pwr.BatteryLifePercent * 100)
+        $isCharging = $pwr.PowerLineStatus -eq [System.Windows.Forms.PowerLineStatus]::Online
+        $script:lastBattPct = $battPct
+        $sysBattText.Text = if ($isCharging) { "⚡ $battPct%" } else { "🔋 $battPct%" }
+
+        # CPU
+        $cpu = (Get-CimInstance Win32_Processor -ErrorAction SilentlyContinue).LoadPercentage
+        if ($null -ne $cpu) {
+            $script:lastCpu = $cpu
+            $sysCpuText.Text = "💻 CPU: $cpu%"
+        }
+    } catch {}
+}
+
+$sysRefreshBtn.Add_MouseLeftButtonDown({
+    param($s, $e)
+    $e.Handled = $true
+    Update-SysStats
+    $statusText.Text = "💻 Hardware Stats Refreshed"
+})
+
+$sysTimer = New-Object System.Windows.Threading.DispatcherTimer
+$sysTimer.Interval = [TimeSpan]::FromSeconds(3)
+$sysTimer.Add_Tick({
+    if ($script:isExtended -and $panelSys.Visibility -eq [System.Windows.Visibility]::Visible) {
+        Update-SysStats
+    }
+})
+$sysTimer.Start()
+
+# 5. QUICK SCRATCHPAD NOTES
+$script:notesFile = Join-Path $script:rootDirectory "quick_notes.txt"
+if (Test-Path $script:notesFile) {
+    try {
+        $notesBox.Text = Get-Content $script:notesFile -Raw -Encoding utf8
+    } catch {}
+}
+
+$notesBox.Add_TextChanged({
+    try {
+        [System.IO.File]::WriteAllText($script:notesFile, $notesBox.Text, [System.Text.Encoding]::UTF8)
+        $notesStatus.Text = "Saved • $(Get-Date -Format 'HH:mm')"
+    } catch {}
 })
 
 # Chat input enter key and send button

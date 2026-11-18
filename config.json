@@ -13,9 +13,9 @@
     "record_timeout_seconds": 6.5
   },
   "island": {
-    "width": 290,
-    "height": 175,
-    "extended_height": 180,
+    "width": 340,
+    "height": 205,
+    "extended_height": 178,
     "auto_hide_seconds": 3.4,
     "clipboard_history_max": 50
   }
